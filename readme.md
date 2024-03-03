@@ -59,6 +59,10 @@ py::class_<Point>(m, "Point")
     .def_readwrite("x", &Point::x)
     .def_readwrite("y", &Point::x);
 PYBIND11_NUMPY_DTYPE(Point, x, y);
+py::class_<McapTamer<Point>>(m, "McapTamer")
+    .def(py::init<>())
+    .def("init", &McapTamer<Point>::init)
+    .def("parse", &McapTamer<Point>::parse);
 ```
 3. pip install again to build
 4. Read in python
