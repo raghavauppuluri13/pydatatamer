@@ -31,19 +31,17 @@ python3 read_data.py
 1. Update `include/mcap_types.hpp` with your new snapshot type
 
 ```
-struct PointKinematics {
-    double position;
-    double velocity;
+struct Point {
+    double x;
+    double y;
 
-    PointKinematics() {}
+    Point() {}
 
     inline void update(std::string name,
                        const DataTamerParser::VarNumber &data) {
-        int index = EXTRACT_INDEX(name);
-
-        if (array_name_eq(name, "position")) {
+        if (name == "x")) {
             position = std::get<double>(data);
-        } else if (name == "velocity") {
+        } else if (name == "y") {
             velocity = std::get<double>(data);
         } else {
             std::cerr << "unknown series name: " << name << std::endl;
@@ -56,11 +54,11 @@ struct PointKinematics {
 2. Update mcap_reader.cpp's `PYBIND11_MODULE->McapReader` with your new snapshot type template
 
 ```
-py::class_<PointKinematics>(m, "PointKinematics")
+py::class_<Point>(m, "Point")
     .def(py::init<>())
-    .def_readwrite("position", &PointKinematics::position)
-    .def_readwrite("velocity", &PointKinematics::velocity);
-PYBIND11_NUMPY_DTYPE(PointKinematics, position, velocity);
+    .def_readwrite("x", &Point::x)
+    .def_readwrite("y", &Point::x);
+PYBIND11_NUMPY_DTYPE(Point, x, y);
 ```
 3. pip install again to build
 
