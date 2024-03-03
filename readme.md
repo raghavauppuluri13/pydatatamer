@@ -57,7 +57,7 @@ struct Point {
 py::class_<Point>(m, "Point")
     .def(py::init<>())
     .def_readwrite("x", &Point::x)
-    .def_readwrite("y", &Point::x);
+    .def_readwrite("y", &Point::y);
 PYBIND11_NUMPY_DTYPE(Point, x, y);
 py::class_<McapTamer<Point>>(m, "McapTamer")
     .def(py::init<>())
